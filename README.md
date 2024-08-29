@@ -13,5 +13,5 @@ Request :
     "salary" : 90000
 }
 
-Topics : EMP-IN-TOPIC
+Topics : EMP-IN-TOPIC,
          EMP-OUT-TOPIC
