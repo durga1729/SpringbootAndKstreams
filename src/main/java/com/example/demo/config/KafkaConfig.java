@@ -7,12 +7,15 @@ import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.kstream.*;
+import org.apache.kafka.streams.state.KeyValueBytesStoreSupplier;
+import org.apache.kafka.streams.state.Stores;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.annotation.EnableKafkaStreams;
 import org.springframework.kafka.config.TopicBuilder;
+import org.springframework.kafka.support.serializer.JsonSerde;
 
 @Configuration
 @EnableKafka
@@ -69,6 +72,7 @@ public class KafkaConfig {
         return stream;
     }
 
+
     @Bean
     public KStream<String, Employee> empStream(StreamsBuilder streamsBuilder) {
 
@@ -89,6 +93,18 @@ public class KafkaConfig {
         processedStream.to("emp-out-topic", Produced.with(Serdes.String(), employeeSerde));
 
         return stream;
+    }
+
+    @Bean
+    public KTable<String, Employee> table(StreamsBuilder builder) {
+        KeyValueBytesStoreSupplier store =
+                Stores.persistentKeyValueStore("employees");
+        JsonSerde<Employee> orderSerde = new JsonSerde<>(Employee.class);
+        KStream<String, Employee> stream = builder
+                .stream("emp-in-topic", Consumed.with(Serdes.String(), orderSerde));
+        return stream.toTable(Materialized.<String, Employee>as(store)
+                .withKeySerde(Serdes.String())
+                .withValueSerde(orderSerde));
     }
 
 }
