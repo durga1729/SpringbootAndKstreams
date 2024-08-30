@@ -3,7 +3,7 @@
 3) Pushed the employee objects after filtering in to EMP-OUT-TOPIC
 4) Everything implemented using KSTREAMS
 
-URL : http://localhost:8080/emp
+POST URL : http://localhost:8080/emp
 
 Request :
 
@@ -15,3 +15,7 @@ Request :
 
 Topics : EMP-IN-TOPIC,
          EMP-OUT-TOPIC
+
+         
+
+![image](https://github.com/user-attachments/assets/d2e4824d-73fe-4828-b50f-50a6f742b0f9)
