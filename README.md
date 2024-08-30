@@ -16,6 +16,7 @@ Request :
 Topics : EMP-IN-TOPIC,
          EMP-OUT-TOPIC
 
+GET URL : http://localhost:8080/all
          
 
 ![image](https://github.com/user-attachments/assets/d2e4824d-73fe-4828-b50f-50a6f742b0f9)
